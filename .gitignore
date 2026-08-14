@@ -1,0 +1,9 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.zip
+test.jpg
+aws/
+awscliv2.zip
+kubectl

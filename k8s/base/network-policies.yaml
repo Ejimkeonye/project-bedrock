@@ -1,0 +1,118 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: catalog-policy
+  namespace: retail-app
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: catalog
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ui
+  egress:
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: carts-policy
+  namespace: retail-app
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: carts
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ui
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: checkout
+              app.kubernetes.io/component: service
+  egress:
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: orders-policy
+  namespace: retail-app
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: orders
+      app.kubernetes.io/component: service
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ui
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: checkout
+              app.kubernetes.io/component: service
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: orders
+              app.kubernetes.io/component: rabbitmq
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 443
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: checkout-policy
+  namespace: retail-app
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: checkout
+      app.kubernetes.io/component: service
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ui
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: checkout
+              app.kubernetes.io/component: redis
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: orders
+              app.kubernetes.io/component: service
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: carts
+    - to: []
+      ports:
+        - protocol: UDP
+          port: 53

@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:930804195409:certificate/90de96b6-872a-45b5-ab8b-734fd6ed5701
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/target-type: ip
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"alb.ingress.kubernetes.io/certificate-arn":"arn:aws:acm:us-east-1:930804195409:certificate/90de96b6-872a-45b5-ab8b-734fd6ed5701","alb.ingress.kubernetes.io/listen-ports":"[{\"HTTP\":80},{\"HTTPS\":443}]","alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/ssl-redirect":"443","alb.ingress.kubernetes.io/target-type":"ip","kubernetes.io/ingress.class":"alb"},"name":"retail-ui-ingress","namespace":"retail-app"},"spec":{"rules":[{"http":{"paths":[{"backend":{"service":{"name":"ui","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
+    kubectl.kubernetes.io/restartedAt: "1786774117"
+    kubernetes.io/ingress.class: alb
+  creationTimestamp: "2026-08-13T09:49:22Z"
+  finalizers:
+  - ingress.k8s.aws/resources
+  generation: 1
+  name: retail-ui-ingress
+  namespace: retail-app
+  resourceVersion: "1332229"
+  uid: b44f3a66-75e0-4e96-bb57-9be3495ff1bf
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: ui
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: k8s-retailap-retailui-dd768ff5c0-2132271463.us-east-1.elb.amazonaws.com
+      ports:
+      - port: 80
+        protocol: ""
+      - port: 443
+        protocol: ""

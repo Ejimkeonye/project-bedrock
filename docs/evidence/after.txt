@@ -1,0 +1,8 @@
+NAME                             READY   STATUS    RESTARTS      AGE   IP            NODE                         NOMINATED NODE   READINESS GATES
+carts-6878c48d95-7lr6g           1/1     Running   0             17h   10.0.11.49    ip-10-0-11-55.ec2.internal   <none>           <none>
+catalog-c4bd7f74d-8gv4l          1/1     Running   2 (47m ago)   17h   10.0.11.123   ip-10-0-11-55.ec2.internal   <none>           <none>
+checkout-754f67976c-w4xsl        1/1     Running   0             17h   10.0.11.245   ip-10-0-11-55.ec2.internal   <none>           <none>
+checkout-redis-5ffd844f7-5d4wv   1/1     Running   0             17h   10.0.11.25    ip-10-0-11-55.ec2.internal   <none>           <none>
+orders-7db55985d7-lrzk6          1/1     Running   0             17h   10.0.11.30    ip-10-0-11-55.ec2.internal   <none>           <none>
+orders-rabbitmq-0                1/1     Running   0             17h   10.0.11.190   ip-10-0-11-55.ec2.internal   <none>           <none>
+ui-6f577c4998-n87jc              1/1     Running   0             73s   10.0.10.97    ip-10-0-10-77.ec2.internal   <none>           <none>

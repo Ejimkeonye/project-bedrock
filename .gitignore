@@ -7,3 +7,4 @@ test.jpg
 aws/
 awscliv2.zip
 kubectl
+tls/*.key

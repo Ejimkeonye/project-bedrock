@@ -84,6 +84,33 @@ resource "aws_eks_node_group" "this" {
     max_size     = 4
     min_size     = 2
   }
+
+  tags = {
+    "k8s.io/cluster-autoscaler/project-bedrock-cluster" = "owned"
+    "k8s.io/cluster-autoscaler/enabled"                 = "true"
+  }
+}
+
+resource "aws_iam_role_policy" "node_autoscaler" {
+  name = "project-bedrock-cluster-autoscaler-policy"
+  role = aws_iam_role.node.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:DescribeAutoScalingInstances",
+        "autoscaling:DescribeLaunchConfigurations",
+        "autoscaling:DescribeTags",
+        "autoscaling:SetDesiredCapacity",
+        "autoscaling:TerminateInstanceInAutoScalingGroup",
+        "ec2:DescribeLaunchTemplateVersions",
+        "ec2:DescribeInstanceTypes"
+      ]
+      Resource = "*"
+    }]
+  })
 }
 
 data "tls_certificate" "eks" {
